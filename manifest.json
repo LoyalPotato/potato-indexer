@@ -3,7 +3,7 @@
 	"name": "Obsidian Indexer",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Obsidian plugin to generate index based on your selection",
+	"description": "Obsidian plugin to generate index based on your selection or of the whole file",
 	"author": "LoyalPotato",
 	"authorUrl": {
 		"Site": "https://loyalpotato.dev/",
