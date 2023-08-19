@@ -1,15 +1,14 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "potato-indexer",
 	"version": "1.0.2",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Obsidian plugin to generate index based on your selection or of the whole file",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
 	},
-	"keywords": [],
-	"author": "",
+	"author": "LoyalPotato",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^16.11.6",
