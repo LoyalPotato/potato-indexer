@@ -4,7 +4,7 @@ export function generateIndex(content: string): string {
   }
 
   const lines = content.split("\n");
-  let index = "\n# Content Index\n\n";
+  let index = "\n## Content Index\n\n";
   const indexPos: number[] = [];
   let contents = "";
 
