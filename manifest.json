@@ -1,11 +1,13 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
+	"id": "potato-indexer",
+	"name": "Obsidian Indexer",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"description": "Obsidian plugin to generate index based on your selection",
+	"author": "LoyalPotato",
+	"authorUrl": {
+		"Site": "https://loyalpotato.dev/",
+		"Github": "https://github.com/loyalpotato"
+	},
 	"isDesktopOnly": false
 }
