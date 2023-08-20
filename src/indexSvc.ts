@@ -7,19 +7,18 @@ export function generateIndex(content: string): string {
   let index = "\n## Content Index\n\n";
   const indexPos: number[] = [];
   let contents = "";
+  let isNewIndex = false;
 
   for (let i = 0; i < lines.length; ++i) {
     const line = lines[i];
     if (!line) continue;
     if (line.includes("## Content Index")) {
-      console.log("index start", i);
       indexPos[0] = i;
-    } else if (indexPos[0] != null && line.includes("- [")) {
+    } else if (!isNewIndex && line.includes("- [")) {
       indexPos[1] = i;
-      console.log("index val", i);
     } else if (line.startsWith("#")) {
       if (indexPos.length === 0) {
-        console.log("no index start", i);
+        isNewIndex = true;
         indexPos[0] = i + 1;
       }
       contents += `${generateLink(line)}\n`;
