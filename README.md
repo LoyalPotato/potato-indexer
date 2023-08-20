@@ -14,4 +14,4 @@ Pick whichever suits your needs at that moment.
 ## Improvements
 
 - [ ] Instead of replacing the whole file, try and replace just the specific sections where the index is or is to be inserted;
-- [ ] When generating the tabs, do it based on how many titles there are. If I select a h2 title and h3 it will have two tabs instead of 1 and 2;
+- [x] When generating the tabs, do it based on how many titles there are. If I select a h2 title and h3 it will have two tabs instead of 1 and 2;
