@@ -59,5 +59,5 @@ function generateLink(header: string, tabsOverride?: string): string {
   tabs = tabs.slice(0, -1);
   if (tabsOverride != null) tabs = tabsOverride;
 
-  return `${tabs} - [${headerTitle}](${h}${headerTitle.replaceAll(" ", "%20")})`;
+  return `${tabs}- [${headerTitle}](${h}${headerTitle.replaceAll(" ", "%20")})`;
 }
