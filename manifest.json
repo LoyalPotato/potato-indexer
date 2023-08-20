@@ -1,7 +1,7 @@
 {
 	"id": "potato-indexer",
 	"name": "Potato Indexer",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"minAppVersion": "1.3.7",
 	"description": "Obsidian plugin to generate index based on your selection or of the whole file",
 	"author": "LoyalPotato",
