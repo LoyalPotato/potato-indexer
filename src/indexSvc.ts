@@ -21,7 +21,7 @@ export function generateIndex(content: string): string {
         isNewIndex = true;
         indexPos[0] = i + 1;
       }
-      contents += `${generateLink(line)}\n`;
+      contents += `${generateLink(line, contents.length === 0 ? "" : undefined)}\n`;
     }
   }
 
@@ -40,11 +40,7 @@ export function generateIndex(content: string): string {
 }
 
 
-/**
- * NOTE:
- * One improvement we can do is, if it's a selection, that the tabs are handled as if the first title is # and increments, since we're replacing it for tabs
- */
-function generateLink(header: string): string {
+function generateLink(header: string, tabsOverride?: string): string {
   let tabs = "";
   let h = "";
   let headerTitle = "";
@@ -61,6 +57,7 @@ function generateLink(header: string): string {
 
   headerTitle = headerTitle.trim();
   tabs = tabs.slice(0, -1);
+  if (tabsOverride != null) tabs = tabsOverride;
 
   return `${tabs} - [${headerTitle}](${h}${headerTitle.replaceAll(" ", "%20")})`;
 }
