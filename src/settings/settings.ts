@@ -44,6 +44,54 @@ export class IndexerSettingsTab extends PluginSettingTab {
                     ),
             );
 
+        let minHeaderEl: HTMLDivElement;
+        const minHeaderSet = new Setting(containerEl);
+        minHeaderSet
+            .setName("Minimum header")
+            .setDesc(
+                "What's the minimum header size that you want to include.",
+            );
+
+		// NOTE: The extra btn needs to be added here
+        minHeaderSet.addSlider((cp) =>
+            cp
+                .setDynamicTooltip()
+                .setValue(this.plugin.settings.minHeader)
+                .setLimits(1, 6, 1)
+                .onChange((val) => {
+                    minHeaderEl.innerText = ` ${val.toString()}`;
+                    this.updateSetting("minHeader", val);
+                }),
+        );
+
+        minHeaderSet.settingEl.createDiv("", (el) => {
+            minHeaderEl = el;
+            el.style.minWidth = "2.3em";
+            el.style.textAlign = "right";
+            el.innerText = ` ${this.plugin.settings.minHeader.toString()}`;
+        });
+
+        let maxHeaderEl: HTMLDivElement;
+        new Setting(containerEl)
+            .setName("Maximum header")
+            .setDesc("Up to which header size to include in the index.")
+            .addSlider((cp) =>
+                cp
+                    .setDynamicTooltip()
+                    .setValue(this.plugin.settings.maxHeader)
+                    .setLimits(1, 6, 1)
+                    .onChange((val) => {
+                        maxHeaderEl.innerText = ` ${val.toString()}`;
+                        this.updateSetting("maxHeader", val);
+                    }),
+            )
+            .settingEl.createDiv("", (el) => {
+                maxHeaderEl = el;
+                el.style.minWidth = "2.3em";
+                el.style.textAlign = "right";
+                el.innerText = ` ${this.plugin.settings.maxHeader.toString()}`;
+            });
+    }
 
     private async updateSetting<S extends keyof IndexerSettings>(
         setting: S,
