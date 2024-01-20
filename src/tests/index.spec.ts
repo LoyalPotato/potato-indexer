@@ -4,24 +4,24 @@ import { generateIndex } from "../indexSvc";
 import { DEFAULT_SETTINGS, IndexerSettings } from "../settings/model";
 
 describe("general", function () {
-	it("should remain empty if no input", function () {
-		const ret = generateIndex("", DEFAULT_SETTINGS);
-		assert.equal(ret, "");
-	});
+    it("should remain empty if no input", function () {
+        const ret = generateIndex("", DEFAULT_SETTINGS);
+        assert.equal(ret, "");
+    });
 });
 
 // insert after header, default header
 describe("default settings", function () {
-	const ogNote = `
+    const ogNote = `
 # Title one
 
 ## Title two
 
 In the second one I am text`;
 
-	it("should insert after the first header", function () {
-		const genNote = generateIndex(ogNote, DEFAULT_SETTINGS);
-		const expected = `
+    it("should insert after the first header", function () {
+        const genNote = generateIndex(ogNote, DEFAULT_SETTINGS);
+        const expected = `
 # Title one
 
 ## Content Index
@@ -33,11 +33,11 @@ In the second one I am text`;
 
 In the second one I am text`;
 
-		assert.equal(genNote, expected);
-	});
+        assert.equal(genNote, expected);
+    });
 
-	it("should update the existing TOC with ## Content Index", function () {
-		const input = `
+    it("should update the existing TOC with ## Content Index", function () {
+        const input = `
 # Title one
 
 ## Content Index
@@ -52,8 +52,8 @@ In the second one I am text
 # Post title
 `;
 
-		const genNote = generateIndex(input, DEFAULT_SETTINGS);
-		const expected = `
+        const genNote = generateIndex(input, DEFAULT_SETTINGS);
+        const expected = `
 # Title one
 
 ## Content Index
@@ -69,23 +69,27 @@ In the second one I am text
 # Post title
 `;
 
-		assert.equal(genNote, expected);
-	});
+        assert.equal(genNote, expected);
+    });
+
 });
 
 describe("insert after header false", function () {
-	const settings: IndexerSettings = { ...DEFAULT_SETTINGS, insertAfterFirstHeader: false };
+    const settings: IndexerSettings = {
+        ...DEFAULT_SETTINGS,
+        insertAfterFirstHeader: false,
+    };
 
-	const ogNote = `
+    const ogNote = `
 # Title one
 
 ## Title two
 
 In the second one I am text`;
 
-	it("should insert at the start of the note", function () {
-		const genNote = generateIndex(ogNote, settings);
-		const expected = `## Content Index
+    it("should insert at the start of the note", function () {
+        const genNote = generateIndex(ogNote, settings);
+        const expected = `## Content Index
 
 - [Title one](#Title%20one)
 	- [Title two](##Title%20two)
@@ -96,11 +100,11 @@ In the second one I am text`;
 
 In the second one I am text`;
 
-		assert.equal(genNote, expected);
-	});
+        assert.equal(genNote, expected);
+    });
 
-	it("should update the existing TOC with ## Content Index", function () {
-		const input = `## Content Index
+    it("should update the existing TOC with ## Content Index", function () {
+        const input = `## Content Index
 
 - [Title one](#Title%20one)
 	- [Title two](##Title%20two)
@@ -114,8 +118,8 @@ In the second one I am text
 # Post title
 `;
 
-		const genNote = generateIndex(input, settings);
-		const expected = `## Content Index
+        const genNote = generateIndex(input, settings);
+        const expected = `## Content Index
 
 - [Title one](#Title%20one)
 	- [Title two](##Title%20two)
@@ -130,23 +134,26 @@ In the second one I am text
 # Post title
 `;
 
-		assert.equal(genNote, expected);
-	});
+        assert.equal(genNote, expected);
+    });
 });
 
 describe("custom header to look for", function () {
-	const settings: IndexerSettings = { ...DEFAULT_SETTINGS, headerTitleToLookFor: "## Table of Contents" };
+    const settings: IndexerSettings = {
+        ...DEFAULT_SETTINGS,
+        headerTitleToLookFor: "## Table of Contents",
+    };
 
-	const ogNote = `
+    const ogNote = `
 # Title one
 
 ## Title two
 
 In the second one I am text`;
 
-	it("should insert after the first header", function () {
-		const genNote = generateIndex(ogNote, settings);
-		const expected = `
+    it("should insert after the first header", function () {
+        const genNote = generateIndex(ogNote, settings);
+        const expected = `
 # Title one
 
 ## Table of Contents
@@ -158,11 +165,11 @@ In the second one I am text`;
 
 In the second one I am text`;
 
-		assert.equal(genNote, expected);
-	});
+        assert.equal(genNote, expected);
+    });
 
-	it("should update the existing TOC with ## Table of Contents", function () {
-		const input = `
+    it("should update the existing TOC with ## Table of Contents", function () {
+        const input = `
 # Title one
 
 ## Table of Contents
@@ -177,8 +184,8 @@ In the second one I am text
 # Post title
 `;
 
-		const genNote = generateIndex(input, settings);
-		const expected = `
+        const genNote = generateIndex(input, settings);
+        const expected = `
 # Title one
 
 ## Table of Contents
@@ -194,24 +201,27 @@ In the second one I am text
 # Post title
 `;
 
-		assert.equal(genNote, expected);
-	});
-
+        assert.equal(genNote, expected);
+    });
 });
 
 describe("custom header to look for + insert after header false", function () {
-	const settings: IndexerSettings = { insertAfterFirstHeader: false, headerTitleToLookFor: "## Table of Contents" };
+    const settings: IndexerSettings = {
+        ...DEFAULT_SETTINGS,
+        insertAfterFirstHeader: false,
+        headerTitleToLookFor: "## Table of Contents",
+    };
 
-	const ogNote = `
+    const ogNote = `
 # Title one
 
 ## Title two
 
 In the second one I am text`;
 
-	it("should insert at the start of the note", function () {
-		const genNote = generateIndex(ogNote, settings);
-		const expected = `## Table of Contents
+    it("should insert at the start of the note", function () {
+        const genNote = generateIndex(ogNote, settings);
+        const expected = `## Table of Contents
 
 - [Title one](#Title%20one)
 	- [Title two](##Title%20two)
@@ -222,11 +232,11 @@ In the second one I am text`;
 
 In the second one I am text`;
 
-		assert.equal(genNote, expected);
-	});
+        assert.equal(genNote, expected);
+    });
 
-	it("should update the existing TOC with ## Table of Contents", function () {
-		const input = `## Table of Contents
+    it("should update the existing TOC with ## Table of Contents", function () {
+        const input = `## Table of Contents
 
 - [Title one](#Title%20one)
 	- [Title two](##Title%20two)
@@ -240,8 +250,8 @@ In the second one I am text
 # Post title
 `;
 
-		const genNote = generateIndex(input, settings);
-		const expected = `## Table of Contents
+        const genNote = generateIndex(input, settings);
+        const expected = `## Table of Contents
 
 - [Title one](#Title%20one)
 	- [Title two](##Title%20two)
@@ -256,6 +266,6 @@ In the second one I am text
 # Post title
 `;
 
-		assert.equal(genNote, expected);
-	});
+        assert.equal(genNote, expected);
+    });
 });
