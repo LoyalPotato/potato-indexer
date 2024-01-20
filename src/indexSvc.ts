@@ -1,4 +1,5 @@
 import { IndexerSettings } from "./settings/model";
+import { checkHeaderSize } from "./utils/utils";
 
 export function generateIndex(
     content: string,
@@ -24,6 +25,22 @@ export function generateIndex(
             indexFound = true;
         } else if (indexFound && line.includes("- [")) {
             indexPos[1] = i;
+        } else if (line.length > 0 && line[0] === "#") {
+            if (indexPos.length === 0) {
+                // NOTE: We haven't found the index so far, so assume it doesn't exist
+                if (settings.insertAfterFirstHeader) {
+                    indexPos[0] = i + 1;
+                } else {
+                    indexPos[0] = 0;
+                }
+            }
+
+            if (checkHeaderSize(line, settings.minHeader, settings.maxHeader)) {
+                contents += `${generateLink(
+                    line,
+                    contents.length === 0 ? "" : undefined,
+                )}\n`;
+            }
         }
     }
 
