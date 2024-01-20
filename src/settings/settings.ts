@@ -1,7 +1,6 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
 import Indexer from "../main";
-import { DEFAULT_SETTINGS } from "./model";
-
+import { DEFAULT_SETTINGS, IndexerSettings } from "./model";
 
 export class IndexerSettingsTab extends PluginSettingTab {
     plugin: Indexer;
