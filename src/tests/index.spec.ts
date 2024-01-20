@@ -72,6 +72,24 @@ In the second one I am text
         assert.equal(genNote, expected);
     });
 
+    it("should ignore headers outside range", function () {
+        const input = `
+# Title one
+
+######### Big title
+`;
+        const genNote = generateIndex(input, DEFAULT_SETTINGS);
+        const expected = `
+# Title one
+
+## Content Index
+
+- [Title one](#Title%20one)
+
+######### Big title
+`;
+        assert.equal(genNote, expected);
+    });
 });
 
 describe("insert after header false", function () {
@@ -269,3 +287,45 @@ In the second one I am text
         assert.equal(genNote, expected);
     });
 });
+
+describe("custom min & max headers", function () {
+    const settings: IndexerSettings = {
+        ...DEFAULT_SETTINGS,
+        minHeader: 2,
+        maxHeader: 4,
+    };
+
+    it("should ignore headers outside custom range", function () {
+        const input = `
+# Title one
+
+## Include me
+
+### And include me
+
+#### Aniki
+
+######### Big title
+`;
+        const genNote = generateIndex(input, settings);
+        const expected = `
+# Title one
+
+## Content Index
+
+- [Include me](##Include%20me)
+		- [And include me](###And%20include%20me)
+			- [Aniki](####Aniki)
+
+## Include me
+
+### And include me
+
+#### Aniki
+
+######### Big title
+`;
+        assert.equal(genNote, expected);
+    });
+});
+
