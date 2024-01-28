@@ -63,7 +63,9 @@ export function generateIndex(
     }
 
     const newContent =
-        preIndexContent.join("\n") + index + postIndexContent.join("\n");
+        concatLines(preIndexContent) +
+        index +
+        concatLines(postIndexContent, true);
 
     return newContent;
 }
