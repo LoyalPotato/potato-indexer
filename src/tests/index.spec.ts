@@ -90,6 +90,44 @@ In the second one I am text
 `;
         assert.equal(genNote, expected);
     });
+
+    it("should remain the same when running multiple times without changing", function () {
+        const input = `
+# Title one
+I have content
+
+## Content Index
+
+- [Title one](#Title%20one)
+	- [Title two](##Title%20two)
+
+## Title two
+
+In the second one I am text
+`;
+
+        const expected = `
+# Title one
+I have content
+
+## Content Index
+
+- [Title one](#Title%20one)
+	- [Title two](##Title%20two)
+
+## Title two
+
+In the second one I am text
+`;
+
+        let genNote = generateIndex(input, DEFAULT_SETTINGS);
+
+        assert.equal(genNote, expected);
+
+        genNote = generateIndex(genNote, DEFAULT_SETTINGS);
+
+        assert.equal(genNote, expected);
+    });
 });
 
 describe("insert after header false", function () {
