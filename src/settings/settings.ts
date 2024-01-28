@@ -15,7 +15,9 @@ export class IndexerSettingsTab extends PluginSettingTab {
 
         containerEl.empty();
 
-        new Setting(containerEl)
+        const headerTitleSetting = new Setting(containerEl);
+
+        headerTitleSetting
             .setName("Header title")
             .setDesc(
                 `What title the index will look for to perform updates on. The default value is: ${DEFAULT_SETTINGS.headerTitleToLookFor}`,
@@ -32,7 +34,11 @@ export class IndexerSettingsTab extends PluginSettingTab {
                     ),
             );
 
-        new Setting(containerEl)
+        this.addResetSettingBtn(headerTitleSetting, "headerTitleToLookFor");
+
+        const insertAfterFirstHeaderSetting = new Setting(containerEl);
+
+        insertAfterFirstHeaderSetting
             .setName("Insert after first header")
             .setDesc("Toggle to change insert to the top of the note")
             .addToggle((toggle) =>
@@ -43,35 +49,32 @@ export class IndexerSettingsTab extends PluginSettingTab {
                     ),
             );
 
-        let minHeaderEl: HTMLDivElement;
-        const minHeaderSet = new Setting(containerEl);
-        minHeaderSet
+        this.addResetSettingBtn(
+            insertAfterFirstHeaderSetting,
+            "insertAfterFirstHeader",
+        );
+
+        const minHeaderSetting = new Setting(containerEl);
+        minHeaderSetting
             .setName("Minimum header")
             .setDesc(
                 "What's the minimum header size that you want to include.",
             );
 
-		// NOTE: The extra btn needs to be added here
-        minHeaderSet.addSlider((cp) =>
+        minHeaderSetting.addSlider((cp) =>
             cp
                 .setDynamicTooltip()
                 .setValue(this.plugin.settings.minHeader)
                 .setLimits(1, 6, 1)
                 .onChange((val) => {
-                    minHeaderEl.innerText = ` ${val.toString()}`;
                     this.updateSetting("minHeader", val);
                 }),
         );
 
-        minHeaderSet.settingEl.createDiv("", (el) => {
-            minHeaderEl = el;
-            el.style.minWidth = "2.3em";
-            el.style.textAlign = "right";
-            el.innerText = ` ${this.plugin.settings.minHeader.toString()}`;
-        });
+        this.addResetSettingBtn(minHeaderSetting, "minHeader");
 
-        let maxHeaderEl: HTMLDivElement;
-        new Setting(containerEl)
+        const maxHeaderSetting = new Setting(containerEl);
+        maxHeaderSetting
             .setName("Maximum header")
             .setDesc("Up to which header size to include in the index.")
             .addSlider((cp) =>
@@ -80,16 +83,11 @@ export class IndexerSettingsTab extends PluginSettingTab {
                     .setValue(this.plugin.settings.maxHeader)
                     .setLimits(1, 6, 1)
                     .onChange((val) => {
-                        maxHeaderEl.innerText = ` ${val.toString()}`;
                         this.updateSetting("maxHeader", val);
                     }),
-            )
-            .settingEl.createDiv("", (el) => {
-                maxHeaderEl = el;
-                el.style.minWidth = "2.3em";
-                el.style.textAlign = "right";
-                el.innerText = ` ${this.plugin.settings.maxHeader.toString()}`;
-            });
+            );
+
+        this.addResetSettingBtn(maxHeaderSetting, "maxHeader");
     }
 
     private async updateSetting<S extends keyof IndexerSettings>(
@@ -100,4 +98,17 @@ export class IndexerSettingsTab extends PluginSettingTab {
         await this.plugin.saveSettings();
     }
 
+    private addResetSettingBtn<S extends keyof IndexerSettings>(
+        setting: Setting,
+        settingKey: S,
+    ) {
+        setting.addExtraButton((btn) => {
+            btn.setIcon("reset");
+            btn.setTooltip("Restore setting to default.");
+            btn.onClick(() => {
+                this.updateSetting(settingKey, DEFAULT_SETTINGS[settingKey]);
+                this.display();
+            });
+        });
+    }
 }
