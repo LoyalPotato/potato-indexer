@@ -54,25 +54,8 @@ export function generateIndex(
         indexPos[1] != null ? indexPos[1] + 1 : indexPos[0];
     const postIndexContent = lines.slice(postContentStart);
 
-    if (preIndexContent.length > 0) {
-        /*
-      NOTE: Condition is checking for this case
-      ['# Title', '']
-      Would become
-      # Title
-      (but not another new line here)
-      But if it's
-      ['# Title', '', '']
-      It'll have the new line that I want as a separation
-    */
-        if (
-            preIndexContent.at(-1)?.trim() === "" &&
-            preIndexContent.at(-2)?.[0] === "#"
-        ) {
-            index = "\n" + index;
-        } else if (preIndexContent.at(-1)?.[0] === "#") {
-            index = "\n\n" + index;
-        }
+    if (preIndexContent.length > 0 && preIndexContent.at(-1) !== "") {
+        index = "\n" + index;
     }
 
     if (postIndexContent.length > 0 && postIndexContent[0] !== "") {
