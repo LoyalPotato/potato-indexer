@@ -12,14 +12,13 @@ describe("general", function () {
 
 // insert after header, default header
 describe("default settings", function () {
-    const ogNote = `
+    it("should insert after the first header", function () {
+        const ogNote = `
 # Title one
 
 ## Title two
 
 In the second one I am text`;
-
-    it("should insert after the first header", function () {
         const genNote = generateIndex(ogNote, DEFAULT_SETTINGS);
         const expected = `
 # Title one
