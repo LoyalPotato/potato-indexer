@@ -1,5 +1,5 @@
 import { IndexerSettings } from "./settings/model";
-import { checkHeaderSize } from "./utils/utils";
+import { checkHeaderSize, concatLines, generateLink } from "./utils/utils";
 
 export function generateIndex(
     content: string,
@@ -68,31 +68,4 @@ export function generateIndex(
         concatLines(postIndexContent, true);
 
     return newContent;
-}
-
-// Helpers
-
-function generateLink(header: string, tabsOverride?: string): string {
-    let tabs = "";
-    let h = "";
-    let headerTitle = "";
-    for (let i = 0; i < header.length; ++i) {
-        const char = header[i];
-        if (char === "#") {
-            tabs += "\t";
-            h += "#";
-        } else {
-            headerTitle = header.substring(i);
-            break;
-        }
-    }
-
-    headerTitle = headerTitle.trim();
-    tabs = tabs.slice(0, -1);
-    if (tabsOverride != null) tabs = tabsOverride;
-
-    return `${tabs}- [${headerTitle}](${h}${headerTitle.replaceAll(
-        " ",
-        "%20",
-    )})`;
 }
