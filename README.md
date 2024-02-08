@@ -1,6 +1,6 @@
 # Potato Indexer
 
-If you've every needed an easy way to generate content indexes for your note or for a sub-section of your note, then you're in luck!
+If you've ever needed an easy way to generate content indexes for your note or for a sub-section of your note, then you're in luck!
 
 With this super simple plugin all you have to do is open the command palette, `Ctrl`(on MacOS `CMD`) + `P`, and search for indexer.
 
