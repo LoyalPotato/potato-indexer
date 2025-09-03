@@ -142,9 +142,37 @@ describe("insert after header false", function () {
 
 In the second one I am text`;
 
+    const ogNoteProps = `---
+property1: prop1
+---
+# Title one
+
+## Title two
+
+In the second one I am text`;
+
     it("should insert at the start of the note", function () {
         const genNote = generateIndex(ogNote, settings);
         const expected = `## Content Index
+
+- [Title one](#Title%20one)
+	- [Title two](##Title%20two)
+
+# Title one
+
+## Title two
+
+In the second one I am text`;
+
+        assert.equal(genNote, expected);
+    });
+
+    it("should insert at the start of the note but after properties", function () {
+    const genNote = generateIndex(ogNoteProps, settings);
+    const expected = `---
+property1: prop1
+---
+## Content Index
 
 - [Title one](#Title%20one)
 	- [Title two](##Title%20two)
