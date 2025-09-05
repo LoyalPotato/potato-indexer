@@ -14,6 +14,7 @@ export function generateIndex(
     const indexPos: number[] = [];
     let contents = "";
     let indexFound = false;
+    let propertiesFound = false;
     let endPropertiesPos = 0;
     let countTripDash = 0
     for (let i = 0; i < lines.length; ++i) {
@@ -21,8 +22,10 @@ export function generateIndex(
         if (!line || !line.trim()) continue;
 
         // Ensure index starts after properties not at beginning of the file
-        if (line.startsWith("---")){
-            countTripDash +=1;
+        if (line.startsWith("---") && i == 0 ) propertiesFound = true;
+        
+        if (line.startsWith("---") && propertiesFound == true){
+                countTripDash +=1;
             if (countTripDash == 2)
                 endPropertiesPos = i+1
         }
@@ -40,7 +43,6 @@ export function generateIndex(
                     indexPos[0] = i + 1;
                 } else {
                     indexPos[0] = 0;
-                    indexPos[0] = endPropertiesPos;
                 }
             }
 
@@ -53,12 +55,12 @@ export function generateIndex(
         }
     }
 
+    if (propertiesFound== true) indexPos[0] = endPropertiesPos;
     if (indexPos.length === 0) return content; // Doesn't have one title
 
     index += contents;
 
     const preIndexContent = lines.slice(0, indexPos[0]);
-
     const postContentStart =
         indexPos[1] != null ? indexPos[1] + 1 : indexPos[0];
     const postIndexContent = lines.slice(postContentStart);
