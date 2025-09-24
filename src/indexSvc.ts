@@ -16,18 +16,17 @@ export function generateIndex(
     let indexFound = false;
     let propertiesFound = false;
     let endPropertiesPos = 0;
-    let countTripDash = 0
+    let countTripDash = 0;
     for (let i = 0; i < lines.length; ++i) {
         const line = lines[i];
         if (!line || !line.trim()) continue;
 
         // Ensure index starts after properties not at beginning of the file
-        if (line.startsWith("---") && i == 0 ) propertiesFound = true;
-        
-        if (line.startsWith("---") && propertiesFound == true){
-                countTripDash +=1;
-            if (countTripDash == 2)
-                endPropertiesPos = i+1
+        if (line.startsWith("---") && i == 0) propertiesFound = true;
+
+        if (line.startsWith("---") && propertiesFound == true) {
+            countTripDash++;
+            if (countTripDash == 2) endPropertiesPos = i + 1;
         }
 
         if (line.includes(settings.headerTitleToLookFor)) {
@@ -55,7 +54,7 @@ export function generateIndex(
         }
     }
 
-    if (propertiesFound== true) indexPos[0] = endPropertiesPos;
+    if (propertiesFound == true) indexPos[0] = endPropertiesPos;
     if (indexPos.length === 0) return content; // Doesn't have one title
 
     index += contents;
@@ -67,8 +66,7 @@ export function generateIndex(
 
     if (preIndexContent.length > 0 && preIndexContent.at(-1) !== "") {
         // Ensure index after properties without newline above
-        if (preIndexContent.at(-1) !== "---") 
-            index = "\n" + index;
+        if (preIndexContent.at(-1) !== "---") index = "\n" + index;
     }
 
     if (postIndexContent.length > 0 && postIndexContent[0] !== "") {

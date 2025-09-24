@@ -154,7 +154,7 @@ more text
 
 ---
 
-And this is our final text after two Horizontal Rules.`
+And this is our final text after two Horizontal Rules.`;
 
     it("should insert at the start of the note", function () {
         const genNote = generateIndex(ogNote, settings);
@@ -173,7 +173,7 @@ In the second one I am text`;
     });
 
     it("should insert at the start of the note but after properties", function () {
-        const genNote = generateIndex(ogNoteProps+ogNote, settings);
+        const genNote = generateIndex(ogNoteProps + ogNote, settings);
         const expected = `---
 property1: prop1
 ---
@@ -191,7 +191,10 @@ In the second one I am text`;
     });
 
     it("should insert at the start of the note but after properties ignoring horizontal rules further down the page", function () {
-        const genNote = generateIndex(ogNoteProps+ogNote+ogNoteHR, settings);
+        const genNote = generateIndex(
+            ogNoteProps + ogNote + ogNoteHR,
+            settings,
+        );
         const expected = `---
 property1: prop1
 ---
@@ -216,8 +219,8 @@ And this is our final text after two Horizontal Rules.`;
     });
 
     it("should insert at the start of the note and ignore horizontal rules on the page", function () {
-    const genNote = generateIndex(ogNote+ogNoteHR, settings);
-    const expected = `## Content Index
+        const genNote = generateIndex(ogNote + ogNoteHR, settings);
+        const expected = `## Content Index
 
 - [Title one](#Title%20one)
 	- [Title two](##Title%20two)
@@ -446,4 +449,3 @@ describe("custom min & max headers", function () {
         assert.equal(genNote, expected);
     });
 });
-
