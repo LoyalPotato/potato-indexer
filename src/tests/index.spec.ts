@@ -129,6 +129,7 @@ In the second one I am text
     });
 });
 
+// insert at start of the note
 describe("insert after header false", function () {
     const settings: IndexerSettings = {
         ...DEFAULT_SETTINGS,
@@ -141,6 +142,19 @@ describe("insert after header false", function () {
 ## Title two
 
 In the second one I am text`;
+
+    const ogNoteProps = `---
+property1: prop1
+---
+`;
+    const ogNoteHR = `
+---
+
+more text
+
+---
+
+And this is our final text after two Horizontal Rules.`;
 
     it("should insert at the start of the note", function () {
         const genNote = generateIndex(ogNote, settings);
@@ -155,6 +169,74 @@ In the second one I am text`;
 
 In the second one I am text`;
 
+        assert.equal(genNote, expected);
+    });
+
+    it("should insert at the start of the note but after properties", function () {
+        const genNote = generateIndex(ogNoteProps + ogNote, settings);
+        const expected = `---
+property1: prop1
+---
+## Content Index
+
+- [Title one](#Title%20one)
+	- [Title two](##Title%20two)
+
+# Title one
+
+## Title two
+
+In the second one I am text`;
+        assert.equal(genNote, expected);
+    });
+
+    it("should insert at the start of the note but after properties ignoring horizontal rules further down the page", function () {
+        const genNote = generateIndex(
+            ogNoteProps + ogNote + ogNoteHR,
+            settings,
+        );
+        const expected = `---
+property1: prop1
+---
+## Content Index
+
+- [Title one](#Title%20one)
+	- [Title two](##Title%20two)
+
+# Title one
+
+## Title two
+
+In the second one I am text
+---
+
+more text
+
+---
+
+And this is our final text after two Horizontal Rules.`;
+        assert.equal(genNote, expected);
+    });
+
+    it("should insert at the start of the note and ignore horizontal rules on the page", function () {
+        const genNote = generateIndex(ogNote + ogNoteHR, settings);
+        const expected = `## Content Index
+
+- [Title one](#Title%20one)
+	- [Title two](##Title%20two)
+
+# Title one
+
+## Title two
+
+In the second one I am text
+---
+
+more text
+
+---
+
+And this is our final text after two Horizontal Rules.`;
         assert.equal(genNote, expected);
     });
 
@@ -193,6 +275,7 @@ In the second one I am text
     });
 });
 
+// Insert after custom header.
 describe("custom header to look for", function () {
     const settings: IndexerSettings = {
         ...DEFAULT_SETTINGS,
@@ -260,6 +343,7 @@ In the second one I am text
     });
 });
 
+// Insert after custom header if found otherwise at top of the file
 describe("custom header to look for + insert after header false", function () {
     const settings: IndexerSettings = {
         ...DEFAULT_SETTINGS,
@@ -365,4 +449,3 @@ describe("custom min & max headers", function () {
         assert.equal(genNote, expected);
     });
 });
-
