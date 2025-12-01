@@ -11,6 +11,7 @@ export function generateLink(header: string, tabsOverride?: string): string {
     let tabs = "";
     let h = "";
     let headerTitle = "";
+    let headerLink = "";
     for (let i = 0; i < header.length; ++i) {
         const char = header[i];
         if (char === "#") {
@@ -18,6 +19,7 @@ export function generateLink(header: string, tabsOverride?: string): string {
             h += "#";
         } else {
             headerTitle = header.substring(i);
+            headerLink = header.substring(i).replace(/[#|\\^: ]+/g," ").trim()
             break;
         }
     }
@@ -26,7 +28,7 @@ export function generateLink(header: string, tabsOverride?: string): string {
     tabs = tabs.slice(0, -1);
     if (tabsOverride != null) tabs = tabsOverride;
 
-    return `${tabs}- [${headerTitle}](${h}${headerTitle.replaceAll(
+    return `${tabs}- [${headerTitle}](${h}${headerLink.replaceAll(
         " ",
         "%20",
     )})`;
