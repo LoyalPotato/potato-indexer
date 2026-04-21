@@ -14,6 +14,7 @@ export function generateIndex(
     const indexPos: number[] = [];
     let contents = "";
     let indexFound = false;
+    let headerAfterIndex = false;
     let propertiesFound = false;
     let endPropertiesPos = 0;
     let countTripDash = 0;
@@ -33,9 +34,10 @@ export function generateIndex(
             indexPos[0] = i;
             indexPos[1] = i;
             indexFound = true;
-        } else if (indexFound && line.includes("- [")) {
+        } else if (indexFound && line.includes("- [") && !headerAfterIndex) {
             indexPos[1] = i;
         } else if (line.length > 0 && line[0] === "#") {
+            if (indexFound) headerAfterIndex = true;
             if (indexPos.length === 0) {
                 // NOTE: We haven't found the index so far, so assume it doesn't exist
                 if (settings.insertAfterFirstHeader) {
