@@ -140,6 +140,8 @@ describe("insert after header false", function () {
 # Title one
 
 ## Title two
+- [[Link1]]
+- [[Link2]]
 
 In the second one I am text`;
 
@@ -166,6 +168,8 @@ And this is our final text after two Horizontal Rules.`;
 # Title one
 
 ## Title two
+- [[Link1]]
+- [[Link2]]
 
 In the second one I am text`;
 
@@ -185,6 +189,8 @@ property1: prop1
 # Title one
 
 ## Title two
+- [[Link1]]
+- [[Link2]]
 
 In the second one I am text`;
         assert.equal(genNote, expected);
@@ -206,6 +212,8 @@ property1: prop1
 # Title one
 
 ## Title two
+- [[Link1]]
+- [[Link2]]
 
 In the second one I am text
 ---
@@ -228,6 +236,8 @@ And this is our final text after two Horizontal Rules.`;
 # Title one
 
 ## Title two
+- [[Link1]]
+- [[Link2]]
 
 In the second one I am text
 ---
@@ -249,6 +259,8 @@ And this is our final text after two Horizontal Rules.`;
 # Title one
 
 ## Title two
+- [[Link1]]
+- [[Link2]]
 
 In the second one I am text
 
@@ -265,6 +277,8 @@ In the second one I am text
 # Title one
 
 ## Title two
+- [[Link1]]
+- [[Link2]]
 
 In the second one I am text
 
@@ -286,6 +300,8 @@ describe("custom header to look for", function () {
 # Title one
 
 ## Title two
+- [[Link1]]
+- [[Link2]]
 
 In the second one I am text`;
 
@@ -300,6 +316,8 @@ In the second one I am text`;
 	- [Title two](##Title%20two)
 
 ## Title two
+- [[Link1]]
+- [[Link2]]
 
 In the second one I am text`;
 
@@ -316,6 +334,8 @@ In the second one I am text`;
 	- [Title two](##Title%20two)
 
 ## Title two
+- [[Link1]]
+- [[Link2]]
 
 In the second one I am text
 
@@ -333,6 +353,8 @@ In the second one I am text
 - [Post title](#Post%20title)
 
 ## Title two
+- [[Link1]]
+- [[Link2]]
 
 In the second one I am text
 
